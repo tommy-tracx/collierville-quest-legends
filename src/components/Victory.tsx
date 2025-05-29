@@ -62,7 +62,7 @@ export const Victory: React.FC<VictoryProps> = ({
   ctx.restore();
 
   drawText(ctx, 'Congratulations!', canvas.width / 2, 150, 28, 'white', 'center', true);
-  drawText(ctx, 'Xavier & Morty completed all challenges!', canvas.width / 2, 180, 20, 'white', 'center', true);
+  drawText(ctx, 'Xavier, Morty & Ava completed all challenges!', canvas.width / 2, 180, 20, 'white', 'center', true);
 
   // Draw both victory characters with celebration animation
   const celebrationBob = Math.sin(frameCount * 0.15) * 10;

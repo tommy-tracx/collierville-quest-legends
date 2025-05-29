@@ -469,6 +469,118 @@ export function drawCarson(
   ctx.stroke();
 }
 
+export function drawAva(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  scale = 1,
+  animated = false,
+  frameCount: number,
+  avaImage?: HTMLImageElement,
+  avaImageLoaded?: boolean
+) {
+  const bobOffset = animated ? Math.sin(frameCount * 0.12) * 3 : 0;
+  const currentY = y + bobOffset;
+
+  // Shadow
+  ctx.save();
+  ctx.globalAlpha = 0.3;
+  ctx.fillStyle = '#000';
+  ctx.beginPath();
+  ctx.ellipse(x, y + 100 * scale, 30 * scale, 8 * scale, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  if (avaImageLoaded && avaImage) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x, currentY - 10 * scale, 35 * scale, 0, Math.PI * 2);
+    ctx.clip();
+    const imgSize = 70 * scale;
+    ctx.drawImage(avaImage, x - imgSize / 2, currentY - 45 * scale, imgSize, imgSize);
+    ctx.restore();
+
+    ctx.strokeStyle = '#D2691E';
+    ctx.lineWidth = 3 * scale;
+    ctx.beginPath();
+    ctx.arc(x, currentY - 10 * scale, 35 * scale, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.save();
+    ctx.shadowColor = '#D2691E';
+    ctx.shadowBlur = 10 * scale;
+    ctx.strokeStyle = '#D2691E';
+    ctx.lineWidth = 2 * scale;
+    ctx.beginPath();
+    ctx.arc(x, currentY - 10 * scale, 35 * scale, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  } else {
+    ctx.fillStyle = '#F1C27D';
+    ctx.beginPath();
+    ctx.arc(x, currentY, 20 * scale, 0, Math.PI * 2);
+    ctx.fill();
+
+    const hairGradient = ctx.createRadialGradient(x, currentY - 10 * scale, 0, x, currentY - 10 * scale, 20 * scale);
+    hairGradient.addColorStop(0, '#8B4513');
+    hairGradient.addColorStop(1, '#5D3311');
+    ctx.fillStyle = hairGradient;
+    ctx.beginPath();
+    ctx.arc(x, currentY - 10 * scale, 20 * scale, Math.PI, 0);
+    ctx.fill();
+
+    ctx.fillStyle = 'white';
+    ctx.fillRect(x - 8 * scale, currentY - 5 * scale, 6 * scale, 6 * scale);
+    ctx.fillRect(x + 2 * scale, currentY - 5 * scale, 6 * scale, 6 * scale);
+    ctx.fillStyle = '#5D3311';
+    ctx.fillRect(x - 6 * scale, currentY - 3 * scale, 3 * scale, 3 * scale);
+    ctx.fillRect(x + 3 * scale, currentY - 3 * scale, 3 * scale, 3 * scale);
+    ctx.fillStyle = 'white';
+    ctx.fillRect(x - 7 * scale, currentY - 4 * scale, 1 * scale, 1 * scale);
+    ctx.fillRect(x + 2 * scale, currentY - 4 * scale, 1 * scale, 1 * scale);
+
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2 * scale;
+    ctx.beginPath();
+    ctx.arc(x - 8 * scale, currentY - 2 * scale, 9 * scale, 0, Math.PI * 2);
+    ctx.arc(x + 8 * scale, currentY - 2 * scale, 9 * scale, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x - 8 * scale + 9 * scale, currentY - 2 * scale);
+    ctx.lineTo(x + 8 * scale - 9 * scale, currentY - 2 * scale);
+    ctx.stroke();
+
+    ctx.save();
+    ctx.globalAlpha = 0.2;
+    ctx.fillStyle = '#ccccff';
+    ctx.beginPath();
+    ctx.arc(x - 8 * scale, currentY - 2 * scale, 9 * scale, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(x + 8 * scale, currentY - 2 * scale, 9 * scale, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.strokeStyle = '#5D3311';
+    ctx.lineWidth = 2 * scale;
+    ctx.beginPath();
+    ctx.arc(x, currentY + 6 * scale, 8 * scale, 0, Math.PI);
+    ctx.stroke();
+  }
+
+  const bodyGradient = ctx.createLinearGradient(x - 25 * scale, currentY + 20 * scale, x + 25 * scale, currentY + 80 * scale);
+  bodyGradient.addColorStop(0, '#D2691E');
+  bodyGradient.addColorStop(1, '#A0522D');
+  ctx.fillStyle = bodyGradient;
+  ctx.fillRect(x - 25 * scale, currentY + 20 * scale, 50 * scale, 60 * scale);
+
+  ctx.fillRect(x - 35 * scale, currentY + 25 * scale, 10 * scale, 40 * scale);
+  ctx.fillRect(x + 25 * scale, currentY + 25 * scale, 10 * scale, 40 * scale);
+
+  ctx.fillStyle = '#333';
+  ctx.fillRect(x - 5 * scale, currentY + 30 * scale, 3 * scale, 25 * scale);
+  ctx.fillRect(x + 2 * scale, currentY + 30 * scale, 3 * scale, 25 * scale);
+}
 export function drawMemberAvatar(
   ctx: CanvasRenderingContext2D,
   x: number,
